@@ -10,10 +10,10 @@ import CreateAccount from './pages/CreateAccount';
   export default function App() {
   return (
     <NavigationContainer>
-      <Stack.Navigator initialRouteName="">
-        <Stack.Screen name="Chave De Roda" component={LoginScreen} />
-        <Stack.Screen name="Crie sua Conta" component={CreateAccount} />
-        <Stack.Screen name="Dashboard" component={HomeScreen} options={{headerBackVisible: false}}/>
+      <Stack.Navigator initialRouteName="Chave De Roda">
+        <Stack.Screen name="Chave De Roda" component={LoginScreen} options={{headerShown: false}}/>
+        <Stack.Screen name="Crie sua Conta" component={CreateAccount} options={{headerTransparent: true, headerTitle: ''}}/>
+        <Stack.Screen name="Dashboard" component={HomeScreen} options={{headerBackVisible: false, headerShown: false} }/>
       </Stack.Navigator>
     </NavigationContainer>
   );

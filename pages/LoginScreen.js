@@ -19,6 +19,10 @@ export default function LoginScreen() {
     const auth = getAuth(app);
 
     const handleSignIn = () => {
+      if (email === '' || password === '') {
+        Alert.alert('Digite seu email/senha')
+      } 
+
       signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         console.log('Signed in!')
@@ -56,7 +60,7 @@ export default function LoginScreen() {
     );
   }
 
-const styles = StyleSheet.create({
+export const styles = StyleSheet.create({
   container: {
     flex: 1,
     backgroundColor: '#fff',

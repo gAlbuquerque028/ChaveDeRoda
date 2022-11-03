@@ -1,7 +1,7 @@
 import React, {useEffect} from 'react';
 import { Image, Text, StyleSheet, View, TouchableOpacity, TextInput, Button, Alert } from 'react-native';
 
-import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword, updateProfile} from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase-config'
 import { useNavigation } from '@react-navigation/native';
@@ -13,24 +13,25 @@ const profilePicture = 'https://cdn-icons-png.flaticon.com/512/4948/4948179.png'
 export default function CreateAccount() {
     const [email, setEmail] = React.useState('')
     const [password, setPassword] = React.useState('')
+    const [name, setName] = React.useState('')
     const navigation = useNavigation();
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
 
-    const handleCreateAccount = () => {
-      createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        console.log('Account created!')
-        const user = userCredential.user;
-        console.log(user)
+    const register = async (name, email, password) => {
+      try {
+        await createUserWithEmailAndPassword(auth, email, password).catch((err) =>
+          console.log(err)
+        );
+        await updateProfile(auth.currentUser, { displayName: name }).catch(
+          (err) => console.log(err)
+        );
         navigation.navigate('Chave De Roda')
-      })
-      .catch(error => {
-        console.log(error)
-        Alert.alert(error.message)
-      })
-    }
+      } catch (err) {
+        console.log(err);
+      }
+    };
 
     return (
       <View style={styles.container}>
@@ -39,6 +40,10 @@ export default function CreateAccount() {
         <View style={styles.login}>
               <Image source={{ uri: profilePicture }} style={styles.profilePicture} />
               <View>
+                <Text style={{fontSize: 17, fontWeight: '400', color: '#000'}}>Nome</Text>
+                <TextInput onChangeText={(text) => setName(text)} style={styles.input} placeholder="Digite seu Nome" />
+              </View>
+              <View>
                 <Text style={{fontSize: 17, fontWeight: '400', color: '#000'}}>E-mail</Text>
                 <TextInput onChangeText={(text) => setEmail(text)} style={styles.input} placeholder="Digite seu e-mail" />
               </View>
@@ -46,7 +51,7 @@ export default function CreateAccount() {
                 <Text style={{fontSize: 17, fontWeight: '400', color: '#000'}}>Password</Text>
                 <TextInput onChangeText={(text) => setPassword(text)} style={styles.input} placeholder="Digite sua senha" secureTextEntry={true}/>
               </View>
-              <TouchableOpacity onPress={handleCreateAccount} style={[styles.button, {backgroundColor: '#fff'}]}>
+              <TouchableOpacity onPress={() => register(name, email, password)} style={[styles.button, {backgroundColor: '#fff'}]}>
                 <Text style={{fontSize: 17, fontWeight: '400', color: 'black'}}>Criar Conta</Text>
               </TouchableOpacity>
             </View>
