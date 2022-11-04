@@ -1,7 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import { Image, Text, StyleSheet, View, TouchableOpacity} from 'react-native';
-import { Col, Row, Grid } from 'react-native-easy-grid';
-import { Carro, Moto, Caminhao, Outros } from './Category';
+import { Image, Text, StyleSheet, View, TouchableOpacity, SafeAreaView } from 'react-native';
 import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../firebase-config'
@@ -14,34 +12,54 @@ export default function HomeScreen() {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const navigation = useNavigation();
+
   const SignOut = () => {
     auth.signOut().then(() => {
       navigation.navigate('Chave De Roda')
     })
   }
 
+  const newAgend = () => {
+    navigation.navigate('Categoria')
+  }
+
+  const Header = () => {
+    return (
+      <View style={styles.header}>
+        <TouchableOpacity onPress={SignOut} style={styles.button}>
+            <Text style={styles.textButton}>Sair</Text>
+        </TouchableOpacity>
+
+        <Text style={styles.text}>Bem vindo, {auth.currentUser.displayName}</Text>
+      </View>
+      
+    )
+  }
+
+  const Boxes = () => {
+    return (
+      <View style={styles.boxContainer}>
+        <View style={styles.box}>
+          <View style={styles.inner}>
+            <Text>Texto 1</Text>
+            <Text>Texto 1</Text>
+          </View>
+
+          <TouchableOpacity onPress={newAgend} style={{ width: '100%', height: 40, borderColor: 'black', borderWidth:1, borderRadius: 10, alignItems: 'center', justifyContent: 'center', marginTop: 4, }}>
+                <Text style={{ fontSize: 25 }}>Novo Agendamento</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    )
+  }
+
   return (
     <View style={styles.container}>
       <Image source={{ uri }} style={[styles.image, StyleSheet.absoluteFill]} />
-
-      <View style={{ flex: 1, alignItems: 'center', justifyContent: 'center' }}>
-        <Text>Home Screen, {auth.currentUser.displayName}</Text>
-
-        <Grid style={styles.fund}>
-                <Row>
-                    <Col style={styles.cards}> <Text>Teste</Text> </Col>
-                    <Col style={styles.cards}> <Text>Teste</Text> </Col>
-                </Row>
-                <Row>
-                    <Col style={styles.cards}> <Text>Teste</Text> </Col>
-                    <Col style={styles.cards}> <Text>Teste</Text> </Col>
-                </Row>
-          </Grid>
-
-        <TouchableOpacity onPress={SignOut} style={[styles.button, { backgroundColor: '#fff' }]}>
-          <Text style={styles.text}>Sair</Text>
-        </TouchableOpacity>
-      </View>
+      <SafeAreaView style={styles.container}>
+        <Header />
+        <Boxes />
+      </SafeAreaView>
     </View>
   )
 }
@@ -49,37 +67,54 @@ export default function HomeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
   },
   button: {
-    width: 100,
+    width: 60,
     height: 40,
     borderRadius: 10,
     alignItems: 'center',
     justifyContent: 'center',
-    marginVertical: 10,
     borderColor: '#000',
     borderWidth: 1,
   },
   text: {
-    fontSize: 17,
+    fontSize: 25,
     fontWeight: '400',
     color: 'black'
   },
-  cards:{
-    flex: 1,
-    alignItems:'center',
-    justifyContent: 'center',
+  textButton: {
+      fontSize: 15,
+      fontWeight: '400',
+      color: 'black'
+  },
+  header: {
+    paddingTop: 10,
+    paddingLeft: 10,
+    paddingRight: 80,
+    flexDirection: 'row',
     width: '100%',
-    marginTop: 10
+    height: '08%',
+    alignItems: 'center',
+    justifyContent: 'space-between',
   },
-  fund:{
+  boxContainer: {
+    width: '100%',
+    height: '92%',
+    padding: 5,
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+  },
+  box: {
+    width: '100%',
+    height: '100%',
+  },
+  inner: {
     flex: 1,
-    border: 1,
-    borderStyle: 'solid',
-    resizeMode: 'stretch',
+    backgroundColor: '#fff',
+    borderColor: 'black',
+    borderWidth: 2,
+    alignItems: 'center',
     justifyContent: 'center',
-  },
+    height: '100%'
+  }
 });
