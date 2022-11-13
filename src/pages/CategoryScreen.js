@@ -18,14 +18,11 @@ export default function CategoryScreen() {
   const [categoria, setCategoria] = useState('');
 
   const create = () => {
-    setDoc(doc(db, "agendamentos" ,auth.currentUser.uid), {
-      Categoria: categoria,
-    }).then(() => {
-      console.log('data submitted');
-    }).catch((error) => {
-      console.log(error)
-    });
     navigation.navigate('Servicos')
+  }
+
+  const navigateCaminhao = () => {
+    navigation.navigate('ServiceCaminhao')
   }
 
   const Header = () => {
@@ -52,7 +49,7 @@ export default function CategoryScreen() {
         </View>
 
         <View style={styles.box}>
-          <TouchableOpacity onPress={() => create(setCategoria('Caminhão'))}>
+          <TouchableOpacity onPress={() => navigateCaminhao()}>
             <Caminhao />
           </TouchableOpacity>
         </View>

@@ -5,6 +5,8 @@ import HomeScreen from './src/pages/HomeScreen';
 import CreateAccount from './src/pages/CreateAccount';
 import CategoryScreen from './src/pages/CategoryScreen';
 import ServiceScreen from './src/pages/ServiceScreen';
+import { AlinhamentoCaminhao } from './src/pages/caminhao/AlinhamentoCaminhao';
+import CaminhaoCategory from './src/pages/caminhao/ServiceCaminhao'
 
 
   const Stack = createNativeStackNavigator();
@@ -18,6 +20,8 @@ import ServiceScreen from './src/pages/ServiceScreen';
         <Stack.Screen name="Dashboard" component={HomeScreen} options={{headerBackVisible: false, headerShown: false} }/>
         <Stack.Screen name="Categoria" component={CategoryScreen} options={{headerTransparent: true, headerTitle: ''}}/>
         <Stack.Screen name="Servicos" component={ServiceScreen} options={{headerTransparent: true, headerTitle: ''}}/>
+        <Stack.Screen name="ServiceCaminhao" component={CaminhaoCategory} options={{headerTransparent: true, headerTitle: ''}}/>
+        <Stack.Screen name="AlinhamentoCaminhao" component={AlinhamentoCaminhao} options={{headerTransparent: true, headerTitle: ''}}/>
       </Stack.Navigator>
     </NavigationContainer>
   );
