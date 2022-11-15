@@ -21,8 +21,16 @@ export default function CategoryScreen() {
     navigation.navigate('Servicos')
   }
 
-  const navigateCaminhao = () => {
-    navigation.navigate('ServiceCaminhao')
+  const navigateCarro = () => {
+    navigation.navigate('ServiceCarro')
+  }
+
+  const navigateMoto = () => {
+    navigation.navigate('ServiceMoto')
+  }
+
+  const navigateVan = () => {
+    navigation.navigate('ServiceVan')
   }
 
   const Header = () => {
@@ -37,13 +45,13 @@ export default function CategoryScreen() {
     return (
       <View style={styles.boxContainer}>
         <View style={styles.box}>
-          <TouchableOpacity onPress={() => create(setCategoria('Carro'))}>
+          <TouchableOpacity onPress={() => navigateCarro()}>
             <Carro />
           </TouchableOpacity>
         </View>
 
         <View style={styles.box}>
-          <TouchableOpacity onPress={() => create(setCategoria('Moto'))}>
+          <TouchableOpacity onPress={() => navigateMoto()}>
             <Moto />
           </TouchableOpacity>
         </View>
@@ -55,7 +63,7 @@ export default function CategoryScreen() {
         </View>
 
         <View style={styles.box}>
-          <TouchableOpacity onPress={() => create(setCategoria('Van'))}>
+          <TouchableOpacity onPress={() => navigateVan()}>
             <Van />
           </TouchableOpacity>
         </View>

@@ -1,5 +1,5 @@
 import React, {useEffect} from 'react';
-import { Image, Text, StyleSheet, View, TouchableOpacity, TextInput, Button, Alert } from 'react-native';
+import { Image, Text, StyleSheet, View, TouchableOpacity, TextInput, Alert, KeyboardAvoidingView } from 'react-native';
 
 import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';

@@ -6,7 +6,7 @@ import { initializeApp } from 'firebase/app';
 import { getFirestore, addDoc, collection } from 'firebase/firestore'
 import { firebaseConfig } from '../../../firebase-config'
 
-export const AlinhamentoCaminhao = () => {
+export const RevisaoCarro = () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app)
@@ -42,8 +42,8 @@ export const AlinhamentoCaminhao = () => {
     
     addDoc(collection(db, "agendamentos"), {
       userId: auth.currentUser.uid,
-      Categoria: "Caminhão",
-      Servico: "Alinhamento",
+      Categoria: "Carro",
+      Servico: "Revisão",
       Data: saveDate,
       Hora: saveTime
     }).then(() => {
