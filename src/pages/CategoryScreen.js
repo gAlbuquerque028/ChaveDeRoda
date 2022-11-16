@@ -25,6 +25,10 @@ export default function CategoryScreen() {
     navigation.navigate('ServiceCarro')
   }
 
+  const navigateCaminhao = () => {
+    navigation.navigate('ServiceCaminhao')
+  }
+
   const navigateMoto = () => {
     navigation.navigate('ServiceMoto')
   }
