@@ -122,7 +122,8 @@ const styles = StyleSheet.create({
     borderColor: '#000',
     borderWidth: 2,
     borderRadius: 10,
-    padding: 10,
+    justifyContent: 'center',
     alignItems: 'center',
+    marginTop: 35,
   },
 })
