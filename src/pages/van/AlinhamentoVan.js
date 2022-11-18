@@ -3,13 +3,15 @@ import {View, Text, StyleSheet, SafeAreaView, Platform, TouchableOpacity, Alert,
 import DateTimePicker from '@react-native-community/datetimepicker'
 import { getAuth } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
-import { getFirestore, addDoc, collection } from 'firebase/firestore'
+import { getFirestore, addDoc, collection, getDocs } from 'firebase/firestore'
 import { firebaseConfig } from '../../../firebase-config'
+import { useNavigation } from '@react-navigation/native';
 
 export const AlinhamentoVan = () => {
   const app = initializeApp(firebaseConfig);
   const auth = getAuth(app);
   const db = getFirestore(app)
+  const navigation = useNavigation()
 
   const [date, setDate] = useState(new Date());
   const [mode, setMode] = useState('date');
@@ -39,21 +41,34 @@ export const AlinhamentoVan = () => {
   };
 
   const create = () => {
-    let saveDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}`
-    let saveTime = `${date.getHours()}:${date.getMinutes()}`
-    
-    addDoc(collection(db, "agendamentos"), {
-      userId: auth.currentUser.uid,
-      Categoria: "Van",
-      Servico: "Alinhamento",
-      Data: saveDate,
-      Hora: saveTime
-    }).then(() => {
-      console.log('data submitted');
-      Alert.alert('Agendamento realizado com sucesso!')
-    }).catch((error) => {
-      console.log(error)
-    });
+    let saveDate = `${date.getDate()}/${date.getMonth() + 1}/${date.getFullYear()}--${date.getHours()}:${date.getMinutes()}`
+    const tableRef = collection(db, 'agendamentos')
+
+    getDocs(tableRef).then((snapshot) => {
+
+      let x = snapshot.docs.map(doc => doc.data())
+      let result = x.filter(x => x.dataHora == saveDate)
+
+      console.log(x)
+      console.log(result)
+      console.log(saveDate)
+      if (result.length != 0) {
+        Alert.alert('Infelizmente esse horário já está preenchido, por favor escolha outro')
+      } else {
+        addDoc(collection(db, "agendamentos"), {
+          userId: auth.currentUser.uid,
+          Categoria: "Van",
+          Servico: "Alinhamento",
+          dataHora: saveDate,
+        }).then(() => {
+          console.log('data submitted');
+          Alert.alert('Agendamento realizado com sucesso!')
+          navigation.navigate('Dashboard')
+        }).catch((error) => {
+          console.log(error)
+        });
+      }
+    })
   }
 
   const Form = () => {

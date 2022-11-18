@@ -2,6 +2,7 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import LoginScreen from './src/pages/LoginScreen';
 import HomeScreen from './src/pages/HomeScreen';
+import FeedbackScreen from './src/pages/FeedbackScreen';
 import CreateAccount from './src/pages/CreateAccount';
 import CategoryScreen from './src/pages/CategoryScreen';
 import ServiceScreen from './src/pages/ServiceScreen';
@@ -25,6 +26,7 @@ import { AlinhamentoVan } from './src/pages/van/AlinhamentoVan'
 import { BalanceamentoVan } from './src/pages/van/BalanceamentoVan'
 import { RevisaoVan } from './src/pages/van/RevisaoVan'
 import { TrocaOleoVan } from './src/pages/van/TrocaOleoVan'
+import NewFeedbackScreen from './src/pages/NewFeedbackScreen';
 
   const Stack = createNativeStackNavigator();
   
@@ -35,6 +37,8 @@ import { TrocaOleoVan } from './src/pages/van/TrocaOleoVan'
         <Stack.Screen name="Chave De Roda" component={LoginScreen} options={{headerShown: false}}/>
         <Stack.Screen name="Crie sua Conta" component={CreateAccount} options={{headerTransparent: true, headerTitle: ''}}/>
         <Stack.Screen name="Dashboard" component={HomeScreen} options={{headerBackVisible: false, headerShown: false} }/>
+        <Stack.Screen name="Feedback" component={FeedbackScreen} options={{headerTransparent: true, headerTitle: '',}}/>
+        <Stack.Screen name="FeedbackScreen" component={NewFeedbackScreen} options={{headerTransparent: true, headerTitle: '',}}/>
         <Stack.Screen name="Categoria" component={CategoryScreen} options={{headerTransparent: true, headerTitle: ''}}/>
         <Stack.Screen name="Servicos" component={ServiceScreen} options={{headerTransparent: true, headerTitle: ''}}/>
         <Stack.Screen name="ServiceCaminhao" component={CaminhaoCategory} options={{headerTransparent: true, headerTitle: ''}}/>

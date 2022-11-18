@@ -1,7 +1,7 @@
 import React from 'react';
 import { Image, Text, StyleSheet, View, TouchableOpacity, TextInput, Alert} from 'react-native';
 
-import { getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, signInWithEmailAndPassword, GoogleAuthProvider, signInWithRedirect } from 'firebase/auth';
 import { initializeApp } from 'firebase/app';
 import { firebaseConfig } from '../../firebase-config'
 import { useNavigation } from '@react-navigation/native';
@@ -18,6 +18,17 @@ export default function LoginScreen() {
 
     const app = initializeApp(firebaseConfig);
     const auth = getAuth(app);
+    const provider = new GoogleAuthProvider();
+
+    const googleLogin = () => {
+    signInWithRedirect(auth, provider).then(
+    getRedirectResult(auth),
+    navigation.navigate('Dashboard')
+  ).catch(error => {
+    console.log(error)
+  })
+    }
+    
 
     const handleSignIn = () => {
       if (email === '' || password === '') {
@@ -60,7 +71,7 @@ export default function LoginScreen() {
 
               <View style={styles.socialLoginView}>
                 <TouchableOpacity style={[styles.socialLogin, {marginRight: 20}]}><Image source={{uri: facebook}} style={styles.socialPictures}/></TouchableOpacity>
-                <TouchableOpacity style={[styles.socialLogin]}><Image source={{uri: google}} style={styles.socialPictures}/></TouchableOpacity>
+                <TouchableOpacity style={[styles.socialLogin]}><Image source={{uri: google}} onPress={googleLogin} style={styles.socialPictures}/></TouchableOpacity>
               </View>
             </View>
       </View>
